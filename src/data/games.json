@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "mobile-legends",
+    "name": "Mobile Legends",
+    "active": true,
+    "services": [
+      {
+        "id": "ml-rank",
+        "type": "rank",
+        "name": "Joki Rank",
+        "eta": "1–3 hari",
+        "tiers": [
+          { "name": "Epic", "divisions": ["V", "IV", "III", "II", "I"], "starsPerDivision": 5, "pricePerStar": 7000 },
+          { "name": "Legend", "divisions": ["V", "IV", "III", "II", "I"], "starsPerDivision": 5, "pricePerStar": 9000 },
+          { "name": "Mythic", "divisions": ["-"], "starsPerDivision": 25, "pricePerStar": 15000 }
+        ]
+      },
+      { "id": "ml-classic", "type": "per_unit", "name": "Joki Classic", "unit": "win", "price": 4000, "min": 5 },
+      { "id": "ml-wr", "type": "package", "name": "Paket Winrate 70%", "price": 150000 }
+    ]
+  }
+]
