@@ -29,3 +29,10 @@ a.order-button{display:flex;align-items:center;justify-content:center;font-size:
 .notfound h1{font:900 120px/.8 'Barlow Condensed';color:var(--night);margin:0 0 22px}
 .game.is-link{color:inherit}
 @media(max-width:720px){.info-grid,.testi-grid{grid-template-columns:1fr}.page-head{padding-block:44px 0}}
+
+/* Perbaikan di luar prototype: di mobile, stempel menutupi teks MYTHIC. */
+@media(max-width:720px){
+  .art-rank{font-size:74px;bottom:42px}
+  .art-stamp{right:8px;bottom:10px;font-size:12px;padding:6px 10px}
+}
+@media(max-width:370px){.art-rank{font-size:62px}}
