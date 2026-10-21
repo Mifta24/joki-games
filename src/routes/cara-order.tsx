@@ -1,5 +1,5 @@
-import { Button, Card, Section } from "~/components/ui";
-import { getSite } from "~/lib/catalog";
+import { Button, Steps } from "~/components/ui";
+import { getGames, getSite } from "~/lib/catalog";
 import { buildWaContactLink } from "~/lib/whatsapp";
 
 export function meta() {
@@ -11,48 +11,32 @@ export function meta() {
 
 export default function CaraOrder() {
   const site = getSite();
+  const first = getGames()[0];
   return (
     <>
-      <Section title="Cara order" subtitle="Dari pilih layanan sampai pengerjaan dimulai.">
-        <ol className="space-y-3">
-          {[
-            "Buka halaman game, pilih layanan, dan hitung estimasi harga.",
-            "Klik “Order via WhatsApp”. Pesan berisi detail order terisi otomatis.",
-            "Admin mengonfirmasi harga final dan estimasi waktu di chat.",
-            "Lakukan pembayaran sesuai instruksi admin.",
-            "Kirim data akun lewat chat WhatsApp (bukan lewat website), lalu pengerjaan dimulai.",
-            "Admin menginfokan progres dan memberi tahu saat selesai.",
-          ].map((t, i) => (
-            <li key={i}>
-              <Card className="flex gap-4">
-                <span className="font-bold text-brand">{i + 1}</span>
-                <span className="text-sm">{t}</span>
-              </Card>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      <Section title="Metode pembayaran">
-        <Card>
-          <p className="text-sm">{site.payment.join(" · ")}</p>
-          <p className="mt-2 text-xs text-muted">Detail rekening / QRIS dikirim admin lewat chat setelah harga disepakati.</p>
-        </Card>
-      </Section>
-
-      <Section title="Keamanan akun">
-        <Card>
-          <ul className="list-disc space-y-2 pl-5 text-sm text-muted">
-            <li>Website ini tidak pernah meminta password atau data login.</li>
-            <li>Data akun hanya dikirim ke admin resmi lewat WhatsApp {site.brand}.</li>
-            <li>Ganti password setelah order selesai.</li>
-            <li>Aktifkan verifikasi 2 langkah jika game mendukung.</li>
-          </ul>
-        </Card>
-        <Button href={buildWaContactLink(site.whatsapp)} variant="wa" external className="mt-6">
-          Mulai order via WhatsApp
-        </Button>
-      </Section>
+      <div className="wrap page-head"><h1>Cara order.</h1></div>
+      <Steps withTitle={false} />
+      <div className="wrap" style={{ paddingBottom: 76 }}>
+        <div className="info-grid">
+          <div className="info">
+            <h2>Pembayaran</h2>
+            <p>{site.payment.join(" · ")}. Detail rekening atau QRIS dikirim admin lewat chat setelah harga disepakati.</p>
+          </div>
+          <div className="info">
+            <h2>Keamanan akun</h2>
+            <ul>
+              <li>Website ini tidak pernah meminta password atau data login.</li>
+              <li>Data akun hanya dikirim ke admin resmi lewat WhatsApp.</li>
+              <li>Ganti password setelah order selesai.</li>
+              <li>Aktifkan verifikasi 2 langkah jika game mendukung.</li>
+            </ul>
+          </div>
+        </div>
+        <div className="hero-actions" style={{ marginTop: 28 }}>
+          {first && <Button to={`/joki/${first.slug}`}>Hitung harga <span aria-hidden="true">↗</span></Button>}
+          <Button href={buildWaContactLink(site.whatsapp)} variant="outline">Tanya admin via WhatsApp</Button>
+        </div>
+      </div>
     </>
   );
 }

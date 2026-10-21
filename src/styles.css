@@ -1,22 +1,31 @@
-@import "tailwindcss";
+@import "@fontsource/barlow-condensed/latin-600.css";
+@import "@fontsource/barlow-condensed/latin-700.css";
+@import "@fontsource/barlow-condensed/latin-800.css";
+@import "@fontsource/barlow-condensed/latin-900.css";
+@import "@fontsource/dm-sans/latin-400.css";
+@import "@fontsource/dm-sans/latin-500.css";
+@import "@fontsource/dm-sans/latin-600.css";
+@import "@fontsource/dm-sans/latin-700.css";
+@import "./design.css";
 
-@theme {
-  --color-bg: #0b0d14;
-  --color-surface: #141824;
-  --color-line: #232a3d;
-  --color-muted: #9aa3b8;
-  --color-brand: #7c5cff;
-  --color-brand-dark: #6444f0;
-  --color-wa: #25d366;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--color-bg);
-  color: #e8ebf5;
-  font-family: var(--font-sans);
-}
+/* Tambahan di luar prototype: elemen yang butuh tag lain dari yang dipakai prototype. */
+a.order-button{display:flex;align-items:center;justify-content:center;font-size:14px}
+.calc-intro h1,.section-head h1{font:900 clamp(40px,4.8vw,66px)/.93 'Barlow Condensed';text-transform:uppercase;letter-spacing:-.015em;margin:0}
+.page-head{padding-block:64px 8px}
+.page-head h1{font:900 clamp(44px,5.4vw,76px)/.9 'Barlow Condensed';text-transform:uppercase;letter-spacing:-.015em;margin:0}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px}
+.info{background:var(--white);border:1px solid #c7d0c4;padding:24px}
+.info h2,.info h3{font:800 26px/1 'Barlow Condensed';text-transform:uppercase;margin:0 0 12px}
+.info p,.info li{font-size:13px;line-height:1.65;color:var(--sub);margin:0}
+.info ul{margin:0;padding-left:18px;display:grid;gap:7px}
+.testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.testi{background:var(--white);border:1px solid #c7d0c4;padding:22px;font-size:14px;line-height:1.6}
+.testi img{display:block;max-width:100%;height:auto;margin-bottom:12px}
+.testi small{display:block;margin-top:10px;color:var(--sub);font-size:12px}
+.fab-wa{position:fixed;right:18px;bottom:18px;z-index:30;width:56px;height:56px;border-radius:50%;background:var(--lime);color:var(--night);display:grid;place-items:center;box-shadow:0 8px 24px #0006;transition:transform .15s}
+.fab-wa:hover{transform:scale(1.06)}
+.fab-wa svg{width:28px;height:28px;fill:currentColor}
+.notfound{padding-block:110px;text-align:center}
+.notfound h1{font:900 120px/.8 'Barlow Condensed';color:var(--night);margin:0 0 22px}
+.game.is-link{color:inherit}
+@media(max-width:720px){.info-grid,.testi-grid{grid-template-columns:1fr}.page-head{padding-block:44px 0}}

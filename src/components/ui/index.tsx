@@ -1,64 +1,66 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router";
 
-export function Button({
-  href,
-  children,
-  variant = "primary",
-  className = "",
-  external,
-}: {
-  href: string;
+type ButtonProps = {
+  to?: string;
+  href?: string;
   children: ReactNode;
-  variant?: "primary" | "wa" | "ghost";
-  className?: string;
-  external?: boolean;
-}) {
-  const styles = {
-    primary: "bg-brand hover:bg-brand-dark text-white",
-    wa: "bg-wa hover:brightness-110 text-black",
-    ghost: "border border-line hover:bg-surface text-white",
-  }[variant];
+  variant?: "primary" | "outline";
+};
+
+/** Tombol bergaya prototype. `to` = link internal, `href` = link luar (WhatsApp). */
+export function Button({ to, href, children, variant = "primary" }: ButtonProps) {
+  const cls = `button ${variant}`;
+  if (to) return <Link to={to} className={cls}>{children}</Link>;
+  return <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>;
+}
+
+export function Faq({ items }: { items: { q: string; a: string }[] }) {
   return (
-    <a
-      href={href}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={`inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold transition ${styles} ${className}`}
-    >
-      {children}
-    </a>
+    <section className="faq" id="faq">
+      <div className="wrap faq-layout">
+        <h2>Yang perlu<br />kamu tahu.</h2>
+        <div>
+          {items.map((it) => (
+            <details key={it.q}>
+              <summary>{it.q}</summary>
+              <p>{it.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
-export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`rounded-2xl border border-line bg-surface p-5 ${className}`}>{children}</div>;
-}
+const steps = [
+  ["Pilih game & layanan", "Lihat opsi yang benar-benar tersedia, lalu atur jumlah atau rank yang kamu tuju."],
+  ["Cek estimasi", "Harga berubah sesuai pilihan. Baca ringkasannya sebelum lanjut ke chat."],
+  ["Konfirmasi lewat WA", "Klik tombol order, pesan terisi otomatis. Konfirmasi harga final dan metode bayar di chat admin."],
+];
 
-export function Badge({ children }: { children: ReactNode }) {
-  return <span className="rounded-full bg-brand/15 px-3 py-1 text-xs font-medium text-brand">{children}</span>;
-}
-
-export function Accordion({ items }: { items: { q: string; a: string }[] }) {
+export function Steps({ withTitle = true }: { withTitle?: boolean }) {
   return (
-    <div className="divide-y divide-line rounded-2xl border border-line bg-surface">
-      {items.map((it) => (
-        <details key={it.q} className="group p-5">
-          <summary className="flex cursor-pointer list-none items-center justify-between font-medium">
-            {it.q}
-            <span className="ml-4 text-muted transition group-open:rotate-45">+</span>
-          </summary>
-          <p className="mt-3 text-sm leading-relaxed text-muted">{it.a}</p>
-        </details>
-      ))}
-    </div>
-  );
-}
-
-export function Section({ title, subtitle, children }: { title: string; subtitle?: string; children: ReactNode }) {
-  return (
-    <section className="mx-auto max-w-5xl px-4 py-12">
-      <h2 className="text-2xl font-bold sm:text-3xl">{title}</h2>
-      {subtitle && <p className="mt-2 text-muted">{subtitle}</p>}
-      <div className="mt-6">{children}</div>
+    <section className="steps" id="cara-order">
+      <div className="wrap">
+        {withTitle && <h2>Order tanpa tebak-tebakan.</h2>}
+        <div className="step-grid">
+          {steps.map(([t, d], i) => (
+            <div className="step" key={t}>
+              <span className="n">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </div>
+          ))}
+        </div>
+        <div className="caution">
+          <strong>Catatan penting</strong>
+          <span>
+            Jasa joki dapat melanggar aturan game dan berisiko pada akun. Baca Syarat &amp; Ketentuan sebelum order.
+            Website ini tidak pernah meminta username, password, atau kode verifikasi.
+          </span>
+        </div>
+      </div>
     </section>
   );
 }

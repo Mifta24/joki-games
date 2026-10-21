@@ -90,3 +90,27 @@ describe("schema", () => {
     expect(Game.safeParse(bad).success).toBe(false);
   });
 });
+
+import { describePosition, posFromIndex, starOptionCount } from "../src/lib/pricing";
+
+describe("posFromIndex / describePosition", () => {
+  it("bolak-balik dengan positionIndex", () => {
+    for (let i = 0; i <= totalStars(tiers); i++) {
+      const p = posFromIndex(tiers, i);
+      expect(positionIndex(tiers, p)).toBe(i);
+    }
+  });
+  it("label", () => {
+    expect(describePosition(tiers, posFromIndex(tiers, 12))).toBe("Epic III ★2");
+    expect(describePosition(tiers, posFromIndex(tiers, 25))).toBe("Legend V ★0");
+    expect(describePosition(tiers, posFromIndex(tiers, 75))).toBe("Mythic ★25");
+  });
+});
+
+describe("starOptionCount", () => {
+  it("puncak hanya untuk sisi tujuan di divisi terakhir", () => {
+    expect(starOptionCount(tiers, { tier: 2, division: 0 }, true)).toBe(26);
+    expect(starOptionCount(tiers, { tier: 2, division: 0 }, false)).toBe(25);
+    expect(starOptionCount(tiers, { tier: 0, division: 4 }, true)).toBe(5);
+  });
+});

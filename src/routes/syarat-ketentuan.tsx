@@ -1,4 +1,3 @@
-import { Card, Section } from "~/components/ui";
 import { getSite } from "~/lib/catalog";
 
 export function meta() {
@@ -35,27 +34,24 @@ const sections: { title: string; items: string[] }[] = [
   },
   {
     title: "Refund",
-    items: [
-      "[PERLU DIISI PEMILIK] Tentukan kebijakan: kapan refund penuh, kapan sebagian, dan kapan tidak bisa.",
-    ],
+    items: ["[PERLU DIISI PEMILIK] Tentukan kebijakan: kapan refund penuh, kapan sebagian, dan kapan tidak bisa."],
   },
 ];
 
 export default function Syarat() {
   return (
-    <Section title="Syarat & Ketentuan">
-      <div className="space-y-4">
-        {sections.map((s) => (
-          <Card key={s.title}>
-            <h2 className="font-bold">{s.title}</h2>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
-              {s.items.map((it) => (
-                <li key={it}>{it}</li>
-              ))}
-            </ul>
-          </Card>
-        ))}
+    <>
+      <div className="wrap page-head"><h1>Syarat &amp;<br />ketentuan.</h1></div>
+      <div className="wrap" style={{ paddingBottom: 76 }}>
+        <div className="info-grid">
+          {sections.map((s) => (
+            <div className="info" key={s.title}>
+              <h2>{s.title}</h2>
+              <ul>{s.items.map((it) => <li key={it}>{it}</li>)}</ul>
+            </div>
+          ))}
+        </div>
       </div>
-    </Section>
+    </>
   );
 }

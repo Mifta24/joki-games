@@ -1,5 +1,6 @@
 import { data } from "react-router";
-import { ServiceTabs } from "~/components/game/ServiceTabs";
+import { GameCalculator } from "~/components/game/GameCalculator";
+import { Steps } from "~/components/ui";
 import { getGame, getSite } from "~/lib/catalog";
 import type { Route } from "./+types/game";
 
@@ -27,15 +28,17 @@ export function meta({ loaderData: d }: Route.MetaArgs) {
 export default function GamePage({ loaderData }: Route.ComponentProps) {
   const { game, whatsapp } = loaderData;
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10">
-      <h1 className="text-3xl font-extrabold">Joki {game.name}</h1>
-      <p className="mt-2 text-muted">Pilih layanan, hitung estimasi, lalu order lewat WhatsApp.</p>
-      <div className="mt-8">
-        <ServiceTabs game={game} phone={whatsapp} />
-      </div>
-      <p className="mt-8 text-xs text-muted">
-        Harga di atas adalah estimasi. Harga final dikonfirmasi admin di chat. Joki dapat melanggar ketentuan layanan game, baca Syarat &amp; Ketentuan.
-      </p>
-    </div>
+    <>
+      <section className="calculator" id="kalkulator">
+        <div className="wrap">
+          <div className="calc-intro" style={{ marginBottom: 18 }}>
+            <h1>Joki {game.name}.<br />Hitung dulu.</h1>
+            <p>Pilih layanan dan posisi; ringkasan mengikuti pilihanmu secara langsung. Harga final dikonfirmasi admin di chat.</p>
+          </div>
+          <GameCalculator game={game} phone={whatsapp} />
+        </div>
+      </section>
+      <Steps />
+    </>
   );
 }

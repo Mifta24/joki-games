@@ -72,3 +72,40 @@ export function calcUnitPrice(price: number, qty: number, min = 1): number {
   if (!Number.isFinite(qty) || qty < min) return 0;
   return price * Math.floor(qty);
 }
+
+export type TierPos = { tier: number; division: number; star: number };
+
+/** Kebalikan `positionIndex`. Index == totalStars berarti puncak rank (bintang terakhir terlampaui). */
+export function posFromIndex(tiers: Tier[], index: number): TierPos {
+  const total = totalStars(tiers);
+  const idx = Math.max(0, Math.min(index, total));
+  let cursor = 0;
+  for (let ti = 0; ti < tiers.length; ti++) {
+    const t = tiers[ti];
+    const size = t.divisions.length * t.starsPerDivision;
+    if (idx < cursor + size) {
+      const local = idx - cursor;
+      return { tier: ti, division: Math.floor(local / t.starsPerDivision), star: local % t.starsPerDivision };
+    }
+    cursor += size;
+  }
+  const last = tiers.length - 1;
+  return { tier: last, division: tiers[last].divisions.length - 1, star: tiers[last].starsPerDivision };
+}
+
+/** Label seperti "Epic III ★2" atau "Mythic ★25". */
+export function describePosition(tiers: Tier[], p: TierPos): string {
+  const t = tiers[p.tier];
+  const d = t.divisions[p.division];
+  return `${t.name}${d === "-" ? "" : ` ${d}`} ★${p.star}`;
+}
+
+/**
+ * Jumlah pilihan bintang untuk satu divisi. Hanya sisi "tujuan" pada divisi paling akhir
+ * mendapat satu pilihan ekstra (puncak rank), supaya rank maksimum bisa dijadikan target.
+ */
+export function starOptionCount(tiers: Tier[], p: { tier: number; division: number }, isTarget: boolean): number {
+  const t = tiers[p.tier];
+  const isLast = p.tier === tiers.length - 1 && p.division === t.divisions.length - 1;
+  return t.starsPerDivision + (isTarget && isLast ? 1 : 0);
+}
