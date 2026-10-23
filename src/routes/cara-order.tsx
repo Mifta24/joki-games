@@ -20,6 +20,18 @@ export default function CaraOrder() {
         <div className="info-grid">
           <div className="info">
             <h2>Pembayaran</h2>
+            {site.qris && (
+              <>
+                <img
+                  src={site.qris}
+                  alt="QRIS pembayaran atas nama Bom Joki"
+                  width={260}
+                  style={{ display: "block", maxWidth: "100%", height: "auto", marginBottom: 8 }}
+                  loading="lazy"
+                />
+                <p style={{ marginBottom: 14 }}>QRIS tercatat atas nama <b>BOM JOKI</b> (satu pemilik dengan Snow Joki).</p>
+              </>
+            )}
             <p>Metode: {site.payment.join(" · ")}. Atas nama {site.accounts[0]?.holder ?? "admin"}.</p>
             <ul style={{ marginTop: 12 }}>
               {site.accounts.map((a) => (

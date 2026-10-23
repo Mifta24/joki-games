@@ -58,6 +58,8 @@ export const Site = z.object({
   hours: z.string(),
   /** Nama metode bayar untuk ringkasan (footer, FAQ). */
   payment: z.array(z.string()).min(1),
+  /** Path gambar QRIS di folder public, mis. "/images/qris.png". */
+  qris: z.string().optional(),
   /** Rekening / e-wallet yang ditampilkan di halaman cara order. */
   accounts: z.array(z.object({ method: z.string(), number: z.string(), holder: z.string() })).default([]),
   /** Link pembayaran / donasi online. */

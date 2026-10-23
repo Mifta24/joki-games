@@ -4,6 +4,7 @@
   "whatsapp": "6282118062035",
   "hours": "24 jam",
   "payment": ["QRIS", "DANA", "ShopeePay", "GoPay", "Bank Jago", "SeaBank"],
+  "qris": "/images/qris.jpeg",
   "accounts": [
     { "method": "DANA", "number": "089684691118", "holder": "Muhamad Aditya Firmansyah" },
     { "method": "ShopeePay", "number": "089684691118", "holder": "Muhamad Aditya Firmansyah" },
