@@ -20,7 +20,16 @@ export default function CaraOrder() {
         <div className="info-grid">
           <div className="info">
             <h2>Pembayaran</h2>
-            <p>{site.payment.join(" · ")}. Detail rekening atau QRIS dikirim admin lewat chat setelah harga disepakati.</p>
+            <p>Metode: {site.payment.join(" · ")}. Atas nama {site.accounts[0]?.holder ?? "admin"}.</p>
+            <ul style={{ marginTop: 12 }}>
+              {site.accounts.map((a) => (
+                <li key={a.method}><b>{a.method}</b>: {a.number}</li>
+              ))}
+              {site.paymentLinks.map((l) => (
+                <li key={l.url}><b>{l.label}</b>: <a href={l.url} target="_blank" rel="noopener noreferrer">{l.url.replace("https://", "")}</a></li>
+              ))}
+            </ul>
+            <p style={{ marginTop: 12 }}><b>Penting:</b> setelah membayar, kirim bukti transfer ke admin lewat WhatsApp agar pesanan segera diproses. QRIS dikirim admin lewat chat.</p>
           </div>
           <div className="info">
             <h2>Keamanan akun</h2>

@@ -31,6 +31,7 @@ export const getFaq = () => faq;
 export function getStartingPrice(game: Game): number {
   const prices = game.services.map((s) => {
     if (s.type === "rank") return Math.min(...s.tiers.map((t) => t.pricePerStar));
+    if (s.type === "tiered_unit") return Math.min(...s.options.map((o) => o.price));
     return s.price;
   });
   return Math.min(...prices);

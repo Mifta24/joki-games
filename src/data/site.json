@@ -1,9 +1,29 @@
 {
-  "brand": "JokiKu",
+  "brand": "Snow Joki",
   "url": "https://jokiku.pages.dev",
-  "whatsapp": "6281234567890",
-  "instagram": "jokiku.id",
-  "tiktok": "jokiku.id",
-  "hours": "09:00–23:00 WIB",
-  "payment": ["QRIS", "BCA", "DANA", "GoPay"]
+  "whatsapp": "6282118062035",
+  "hours": "24 jam",
+  "payment": ["QRIS", "DANA", "ShopeePay", "GoPay", "Bank Jago", "SeaBank"],
+  "accounts": [
+    { "method": "DANA", "number": "089684691118", "holder": "Muhamad Aditya Firmansyah" },
+    { "method": "ShopeePay", "number": "089684691118", "holder": "Muhamad Aditya Firmansyah" },
+    { "method": "GoPay", "number": "082118062035", "holder": "Muhamad Aditya Firmansyah" },
+    { "method": "Bank Jago", "number": "101127883394", "holder": "Muhamad Aditya Firmansyah" },
+    { "method": "SeaBank", "number": "901123629286", "holder": "Muhamad Aditya Firmansyah" }
+  ],
+  "paymentLinks": [
+    { "label": "Saweria", "url": "https://saweria.co/snowjoki" },
+    { "label": "Sociabuzz", "url": "https://sociabuzz.com/snowjoki/tribe" }
+  ],
+  "socials": [
+    { "platform": "Instagram", "label": "@curvasudjoki", "url": "https://instagram.com/curvasudjoki" },
+    { "platform": "Instagram", "label": "@bomjoki_", "url": "https://instagram.com/bomjoki_" },
+    { "platform": "TikTok", "label": "@snowjoki2", "url": "https://tiktok.com/@snowjoki2" },
+    { "platform": "TikTok", "label": "@bombomkabar", "url": "https://tiktok.com/@bombomkabar" },
+    { "platform": "TikTok", "label": "@skylinepedia_", "url": "https://tiktok.com/@skylinepedia_" },
+    { "platform": "YouTube", "label": "@snowjoki1", "url": "https://youtube.com/@snowjoki1" },
+    { "platform": "YouTube", "label": "@bommkabar", "url": "https://youtube.com/@bommkabar" },
+    { "platform": "YouTube", "label": "@curvasudjoki", "url": "https://youtube.com/@curvasudjoki" }
+  ],
+  "testimonialUrl": "https://lynk.id/testimonijoki"
 }

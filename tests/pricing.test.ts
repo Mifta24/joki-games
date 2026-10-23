@@ -65,6 +65,20 @@ describe("calcUnitPrice", () => {
   it("0 kalau bukan angka", () => expect(calcUnitPrice(4000, Number.NaN, 1)).toBe(0));
 });
 
+describe("data asli", () => {
+  it("games.json & site.json lolos schema", async () => {
+    const games = (await import("../src/data/games.json")).default;
+    const site = (await import("../src/data/site.json")).default;
+    const { Site } = await import("../src/lib/schema");
+    expect(() => games.forEach((g) => Game.parse(g))).not.toThrow();
+    expect(() => Site.parse(site)).not.toThrow();
+  });
+
+  it("gendong per win: Legend 3 win = 21.000", () => {
+    expect(calcUnitPrice(7000, 3, 1)).toBe(21000);
+  });
+});
+
 describe("buildWaLink", () => {
   it("meng-encode pesan", () => {
     const url = buildWaLink("628123", ["Game: Mobile Legends"]);

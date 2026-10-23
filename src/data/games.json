@@ -10,13 +10,31 @@
         "name": "Joki Rank",
         "eta": "1–3 hari",
         "tiers": [
-          { "name": "Epic", "divisions": ["V", "IV", "III", "II", "I"], "starsPerDivision": 5, "pricePerStar": 7000 },
-          { "name": "Legend", "divisions": ["V", "IV", "III", "II", "I"], "starsPerDivision": 5, "pricePerStar": 9000 },
-          { "name": "Mythic", "divisions": ["-"], "starsPerDivision": 25, "pricePerStar": 15000 }
+          { "name": "Grandmaster", "divisions": ["V", "IV", "III", "II", "I"], "starsPerDivision": 5, "pricePerStar": 5000 },
+          { "name": "Epic", "divisions": ["V", "IV", "III", "II", "I"], "starsPerDivision": 5, "pricePerStar": 4500 },
+          { "name": "Legend", "divisions": ["V", "IV", "III", "II", "I"], "starsPerDivision": 5, "pricePerStar": 5000 },
+          { "name": "Mythic", "divisions": ["-"], "starsPerDivision": 25, "pricePerStar": 11000 },
+          { "name": "Honor", "divisions": ["-"], "starsPerDivision": 25, "pricePerStar": 12000 },
+          { "name": "Glory", "divisions": ["-"], "starsPerDivision": 50, "pricePerStar": 15000 },
+          { "name": "Immortal", "divisions": ["-"], "starsPerDivision": 50, "pricePerStar": 20000 }
         ]
       },
-      { "id": "ml-classic", "type": "per_unit", "name": "Joki Classic", "unit": "win", "price": 4000, "min": 5 },
-      { "id": "ml-wr", "type": "package", "name": "Paket Winrate 70%", "price": 150000 }
+      {
+        "id": "ml-gendong",
+        "type": "tiered_unit",
+        "name": "Gendong per Win",
+        "unit": "win",
+        "min": 1,
+        "options": [
+          { "name": "Epic", "price": 6000 },
+          { "name": "Legend", "price": 7000 },
+          { "name": "Mythic", "price": 14000 },
+          { "name": "Honor", "price": 15000 },
+          { "name": "Glory", "price": 20000 },
+          { "name": "Immortal", "price": 25000 }
+        ]
+      },
+      { "id": "ml-full-grading", "type": "package", "name": "Full Grading", "price": 115000 }
     ]
   }
 ]

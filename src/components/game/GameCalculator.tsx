@@ -14,9 +14,11 @@ import type { Game, RankService, Service } from "~/lib/schema";
 import { buildWaLink } from "~/lib/whatsapp";
 
 type RankState = { from: TierPos; to: TierPos };
-type States = Record<string, RankState | string>;
+type TieredState = { option: number; qty: string };
+type ServiceState = RankState | TieredState | string;
+type States = Record<string, ServiceState>;
 
-function initialState(service: Service): RankState | string {
+function initialState(service: Service): ServiceState {
   if (service.type === "rank") {
     const total = totalStars(service.tiers);
     return {
@@ -25,12 +27,13 @@ function initialState(service: Service): RankState | string {
     };
   }
   if (service.type === "per_unit") return String(service.min);
+  if (service.type === "tiered_unit") return { option: 0, qty: String(service.min) };
   return "";
 }
 
 type Summary = { detail: string; price: number; valid: boolean; error: string; eta: string; lines: string[] };
 
-function summarize(game: Game, service: Service, state: RankState | string): Summary {
+function summarize(game: Game, service: Service, state: ServiceState): Summary {
   const eta = service.eta ? `${service.eta}*` : "Konfirmasi admin";
   const base = [`Game: ${game.name}`, `Layanan: ${service.name}`];
 
@@ -54,6 +57,18 @@ function summarize(game: Game, service: Service, state: RankState | string): Sum
       return { detail, price: 0, valid: false, eta, error: `Masukkan jumlah bulat ${service.min}–999 ${service.unit}.`, lines: [] };
     }
     const price = calcUnitPrice(service.price, n, service.min);
+    return { detail, price, valid: true, error: "", eta, lines: [...base, `Detail: ${detail}`, `Estimasi: ${formatRupiah(price)}`] };
+  }
+
+  if (service.type === "tiered_unit") {
+    const s = state as TieredState;
+    const opt = service.options[s.option] ?? service.options[0];
+    const n = Number(s.qty);
+    const detail = `${opt.name} · ${s.qty || "—"} ${service.unit}`;
+    if (s.qty === "" || !Number.isInteger(n) || n < service.min || n > 999) {
+      return { detail, price: 0, valid: false, eta, error: `Masukkan jumlah bulat ${service.min}–999 ${service.unit}.`, lines: [] };
+    }
+    const price = calcUnitPrice(opt.price, n, service.min);
     return { detail, price, valid: true, error: "", eta, lines: [...base, `Detail: ${detail}`, `Estimasi: ${formatRupiah(price)}`] };
   }
 
@@ -139,6 +154,10 @@ function tierNote(service: Service): string {
   if (service.type === "per_unit") {
     return `Harga ${formatRupiah(service.price)}/${service.unit} · minimal ${service.min} ${service.unit}.`;
   }
+  if (service.type === "tiered_unit") {
+    const rates = service.options.map((o) => `${o.name} ${formatRupiah(o.price)}/${service.unit}`).join(" · ");
+    return `Tarif: ${rates}. Minimal ${service.min} ${service.unit}.`;
+  }
   return `Harga paket ${formatRupiah(service.price)}. Konfirmasi cakupan paket ke admin sebelum membayar.`;
 }
 
@@ -152,7 +171,7 @@ export function GameCalculator({ game, phone }: { game: Game; phone: string }) {
   const service = game.services[idx];
   const state = states[service.id];
   const summary = summarize(game, service, state);
-  const set = (v: RankState | string) => setStates((prev) => ({ ...prev, [service.id]: v }));
+  const set = (v: ServiceState) => setStates((prev) => ({ ...prev, [service.id]: v }));
 
   const monogram = game.name
     .split(/\s+/)
@@ -241,6 +260,38 @@ export function GameCalculator({ game, phone }: { game: Game; phone: string }) {
                     step={1}
                     value={state as string}
                     onChange={(e) => set(e.target.value)}
+                  />
+                </label>
+              </div>
+            </>
+          )}
+          {service.type === "tiered_unit" && (
+            <>
+              <p className="pane-desc">
+                {service.name} dihitung per {service.unit} sesuai rank akunmu. Minimal order {service.min} {service.unit}.
+              </p>
+              <div className="field-stack quantity">
+                <label>
+                  Rank
+                  <select
+                    value={(state as TieredState).option}
+                    onChange={(e) => set({ ...(state as TieredState), option: Number(e.target.value) })}
+                  >
+                    {service.options.map((o, i) => (
+                      <option key={o.name} value={i}>{o.name}</option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Jumlah {service.unit}
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    min={service.min}
+                    max={999}
+                    step={1}
+                    value={(state as TieredState).qty}
+                    onChange={(e) => set({ ...(state as TieredState), qty: e.target.value })}
                   />
                 </label>
               </div>

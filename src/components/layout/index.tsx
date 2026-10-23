@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { getGames, getSite } from "~/lib/catalog";
 import { buildWaContactLink } from "~/lib/whatsapp";
 
-/** "JokiKu" -> JOKI + KU (bagian terakhir berwarna lime). */
+/** "Snow Joki" -> SNOW + JOKI (kata terakhir berwarna lime). */
 function Wordmark({ brand }: { brand: string }) {
   const parts = brand.match(/[A-Z][a-z0-9]*/g) ?? [brand];
   const head = parts.slice(0, -1).join("").toUpperCase();
@@ -57,8 +57,10 @@ export function Footer() {
           {first && <Link to={`/joki/${first.slug}`}>Cek harga</Link>}
           <Link to="/cara-order">Cara order</Link>
           <Link to="/syarat-ketentuan">Syarat &amp; ketentuan</Link>
-          {site.instagram && <a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">Instagram</a>}
-          {site.tiktok && <a href={`https://tiktok.com/@${site.tiktok}`} target="_blank" rel="noopener noreferrer">TikTok</a>}
+          {site.testimonialUrl && <a href={site.testimonialUrl} target="_blank" rel="noopener noreferrer">Testimoni</a>}
+          {site.socials.map((s) => (
+            <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer">{s.platform} {s.label}</a>
+          ))}
         </div>
       </div>
     </footer>
