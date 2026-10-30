@@ -37,3 +37,10 @@ a.order-button{display:flex;align-items:center;justify-content:center;font-size:
   .art-stamp{right:8px;bottom:10px;font-size:12px;padding:6px 10px}
 }
 @media(max-width:370px){.art-rank{font-size:62px}}
+
+/* Footer: sosial media dikelompokkan per platform. */
+.footer-socials{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px 28px;margin-top:30px;padding-top:26px;border-top:1px solid #2f4a3c}
+.footer-socials>div{display:grid;gap:8px;align-content:start}
+.footer-social-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.footer-socials a{font-size:13px;color:#d7e0d4;width:fit-content}
+.footer-socials a:hover{color:var(--lime)}

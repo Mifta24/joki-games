@@ -41,6 +41,11 @@ export function Navbar() {
 export function Footer() {
   const site = getSite();
   const first = getGames()[0];
+  // Kelompokkan per platform (urutan kemunculan di site.json dipertahankan).
+  const socialGroups = site.socials.reduce((map, s) => {
+    map.set(s.platform, [...(map.get(s.platform) ?? []), s]);
+    return map;
+  }, new Map<string, typeof site.socials>());
   return (
     <footer>
       <div className="wrap footer-row">
@@ -58,11 +63,20 @@ export function Footer() {
           <Link to="/cara-order">Cara order</Link>
           <Link to="/syarat-ketentuan">Syarat &amp; ketentuan</Link>
           {site.testimonialUrl && <a href={site.testimonialUrl} target="_blank" rel="noopener noreferrer">Testimoni</a>}
-          {site.socials.map((s) => (
-            <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer">{s.platform} {s.label}</a>
-          ))}
         </div>
       </div>
+      {socialGroups.size > 0 && (
+        <div className="wrap footer-socials" aria-label="Sosial media">
+          {[...socialGroups].map(([platform, items]) => (
+            <div key={platform}>
+              <span className="footer-social-title">{platform}</span>
+              {items.map((s) => (
+                <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer">{s.label} <span aria-hidden="true">↗</span></a>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
     </footer>
   );
 }
