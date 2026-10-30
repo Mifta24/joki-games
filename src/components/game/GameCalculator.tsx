@@ -4,6 +4,7 @@ import {
   calcRankPrice,
   calcUnitPrice,
   describePosition,
+  displayStar,
   positionIndex,
   posFromIndex,
   starOptionCount,
@@ -137,7 +138,7 @@ function PositionPicker({
           {isTarget ? "Bintang tujuan" : "Bintang saat ini"}
           <select id={`${idPrefix}-star`} value={value.star} onChange={(e) => onChange({ ...value, star: Number(e.target.value) })}>
             {range(stars).map((i) => (
-              <option key={i} value={i}>★ {i}</option>
+              <option key={i} value={i}>★ {displayStar(tier, i)}</option>
             ))}
           </select>
         </label>

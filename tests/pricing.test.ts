@@ -107,6 +107,26 @@ describe("schema", () => {
 
 import { describePosition, posFromIndex, starOptionCount } from "../src/lib/pricing";
 
+describe("bintang Mythic+ sesuai angka in-game", () => {
+  it("Mythic 0–24, Honor 25–49, Glory 50–99, Immortal 100+", async () => {
+    const games = (await import("../src/data/games.json")).default;
+    const t = Game.parse(games[0]).services.find((s) => s.type === "rank");
+    if (t?.type !== "rank") throw new Error("layanan rank tidak ditemukan");
+    const byName = Object.fromEntries(t.tiers.map((x, i) => [x.name, i]));
+    const at = (name: string, star: number) =>
+      describePosition(t.tiers, { tier: byName[name], division: 0, star });
+    expect(at("Mythic", 0)).toBe("Mythic ★0");
+    expect(at("Honor", 0)).toBe("Honor ★25");
+    expect(at("Glory", 0)).toBe("Glory ★50");
+    expect(at("Immortal", 0)).toBe("Immortal ★100");
+    // Honor harus mulai tepat di bintang ke-25 sejak Mythic ★0
+    const mythicStart = positionIndex(t.tiers, { tier: byName.Mythic, division: 0, star: 0 });
+    expect(positionIndex(t.tiers, { tier: byName.Honor, division: 0, star: 0 }) - mythicStart).toBe(25);
+    expect(positionIndex(t.tiers, { tier: byName.Glory, division: 0, star: 0 }) - mythicStart).toBe(50);
+    expect(positionIndex(t.tiers, { tier: byName.Immortal, division: 0, star: 0 }) - mythicStart).toBe(100);
+  });
+});
+
 describe("posFromIndex / describePosition", () => {
   it("bolak-balik dengan positionIndex", () => {
     for (let i = 0; i <= totalStars(tiers); i++) {

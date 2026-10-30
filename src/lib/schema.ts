@@ -4,6 +4,8 @@ export const Tier = z.object({
   name: z.string().min(1),
   divisions: z.array(z.string()).min(1),
   starsPerDivision: z.number().int().positive(),
+  /** Jumlah bintang in-game saat tier ini dimulai (Honor 25, Glory 50, Immortal 100). Kosong = 0. */
+  startStar: z.number().int().nonnegative().optional(),
   pricePerStar: z.number().int().nonnegative(),
 });
 

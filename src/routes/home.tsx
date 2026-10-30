@@ -57,7 +57,7 @@ export default function Home() {
       <section className="section wrap" id="game">
         <div className="section-head">
           <h2>Pilih arena.</h2>
-          <p>Mulai dari game yang layanannya sudah tersedia. Game lain menyusul setelah data harganya siap.</p>
+          <p>Layanan joki Mobile Legends: rank, gendong, dan full grading. Harga langsung terlihat di kalkulator.</p>
         </div>
         <div className="game-list">
           {games.map((g, i) => (
@@ -67,11 +67,6 @@ export default function Home() {
               <span className="go">Lihat layanan <span aria-hidden="true">↗</span></span>
             </Link>
           ))}
-          <div className="game soon">
-            <span className="mini">GAME BERIKUTNYA</span>
-            <strong>Segera<br />hadir.</strong>
-            <p>Belum ada daftar dan harga terverifikasi, jadi kami tidak menampilkan layanan fiktif.</p>
-          </div>
         </div>
       </section>
 

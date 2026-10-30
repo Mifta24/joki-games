@@ -14,9 +14,9 @@
           { "name": "Epic", "divisions": ["V", "IV", "III", "II", "I"], "starsPerDivision": 5, "pricePerStar": 4500 },
           { "name": "Legend", "divisions": ["V", "IV", "III", "II", "I"], "starsPerDivision": 5, "pricePerStar": 5000 },
           { "name": "Mythic", "divisions": ["-"], "starsPerDivision": 25, "pricePerStar": 11000 },
-          { "name": "Honor", "divisions": ["-"], "starsPerDivision": 25, "pricePerStar": 12000 },
-          { "name": "Glory", "divisions": ["-"], "starsPerDivision": 50, "pricePerStar": 15000 },
-          { "name": "Immortal", "divisions": ["-"], "starsPerDivision": 50, "pricePerStar": 20000 }
+          { "name": "Honor", "divisions": ["-"], "startStar": 25, "starsPerDivision": 25, "pricePerStar": 12000 },
+          { "name": "Glory", "divisions": ["-"], "startStar": 50, "starsPerDivision": 50, "pricePerStar": 15000 },
+          { "name": "Immortal", "divisions": ["-"], "startStar": 100, "starsPerDivision": 50, "pricePerStar": 20000 }
         ]
       },
       {

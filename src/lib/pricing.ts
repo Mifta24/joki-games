@@ -14,6 +14,11 @@ export type RankPosition = {
   isMax?: boolean;
 };
 
+/** Angka bintang yang tampil di game: bintang dalam divisi + titik awal tier (Honor mulai di 25). */
+export function displayStar(tier: Tier, star: number): number {
+  return (tier.startStar ?? 0) + star;
+}
+
 export function totalStars(tiers: Tier[]): number {
   return tiers.reduce((n, t) => n + t.divisions.length * t.starsPerDivision, 0);
 }
@@ -25,7 +30,7 @@ export function listPositions(tiers: Tier[]): RankPosition[] {
     t.divisions.forEach((div, di) => {
       for (let s = 0; s < t.starsPerDivision; s++) {
         const name = div === "-" ? t.name : `${t.name} ${div}`;
-        out.push({ tier: ti, division: di, star: s, label: `${name} ★${s}` });
+        out.push({ tier: ti, division: di, star: s, label: `${name} ★${displayStar(t, s)}` });
       }
     });
   });
@@ -34,7 +39,7 @@ export function listPositions(tiers: Tier[]): RankPosition[] {
     tier: tiers.length - 1,
     division: last.divisions.length - 1,
     star: last.starsPerDivision,
-    label: `${last.name} (puncak)`,
+    label: `${last.name} (puncak ★${displayStar(last, last.starsPerDivision)})`,
     isMax: true,
   });
   return out;
@@ -93,11 +98,11 @@ export function posFromIndex(tiers: Tier[], index: number): TierPos {
   return { tier: last, division: tiers[last].divisions.length - 1, star: tiers[last].starsPerDivision };
 }
 
-/** Label seperti "Epic III ★2" atau "Mythic ★25". */
+/** Label seperti "Epic III ★2" atau "Honor ★30" (bintang sesuai angka di game). */
 export function describePosition(tiers: Tier[], p: TierPos): string {
   const t = tiers[p.tier];
   const d = t.divisions[p.division];
-  return `${t.name}${d === "-" ? "" : ` ${d}`} ★${p.star}`;
+  return `${t.name}${d === "-" ? "" : ` ${d}`} ★${displayStar(t, p.star)}`;
 }
 
 /**
